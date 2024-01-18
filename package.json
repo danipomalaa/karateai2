@@ -1,7 +1,7 @@
 {
   "name": "react-tf",
   "version": "0.1.1",
-  "homepage": "http://danipomalaa.github.io/karateai",
+  "homepage": "http://danipomalaa.github.io/karateai2",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
