@@ -23,6 +23,7 @@ export default function PictureList(props) {
       })
 
     const [angleBody, setAngleBody] = useState({})
+    const [copyClipboardReady, setCopyClipboardReady] = useState(false)
 
     const imgRef = useRef()
     const canvasScreenShootRef = useRef()
@@ -250,95 +251,95 @@ export default function PictureList(props) {
         let R_SEW,R_ESH,L_SEW,L_ESH,R_HKA,L_HKA,R_KAF,L_KAF,R_KHH,L_KHH,R_KHS,L_KHS,R_HSS,L_HSS,R_ESS,L_ESS=0;
 
         let R_S = pose.keypoints[11];let R_E = pose.keypoints[13];let R_W = pose.keypoints[15];
-          let R_H = pose.keypoints[23];let R_K = pose.keypoints[25];let R_A = pose.keypoints[27];
-          let R_FI = pose.keypoints[31];
+        let R_H = pose.keypoints[23];let R_K = pose.keypoints[25];let R_A = pose.keypoints[27];
+        let R_FI = pose.keypoints[31];
 
-          let L_S = pose.keypoints[12];let L_E = pose.keypoints[14];let L_W = pose.keypoints[16];
-          let L_H = pose.keypoints[24];let L_K = pose.keypoints[26];let L_A = pose.keypoints[28];
-          let L_FI = pose.keypoints[32]
+        let L_S = pose.keypoints[12];let L_E = pose.keypoints[14];let L_W = pose.keypoints[16];
+        let L_H = pose.keypoints[24];let L_K = pose.keypoints[26];let L_A = pose.keypoints[28];
+        let L_FI = pose.keypoints[32]
 
-          let _angleBody = {}
+        let _angleBody = {}
 
-          if(R_S.score > 0.6 && R_E.score>0.6 && R_W.score > 0.6){
-            R_SEW = calculateAgle(R_S, R_E, R_W).sudut            
-            _angleBody = {..._angleBody, R_SEW}
-            console.log('R_SEW', R_SEW)
-          }
-          if(R_E.score > 0.6 && R_S.score>0.6 && R_H.score > 0.6){
-            R_ESH = calculateAgle(R_E, R_S, R_H).sudut
-            _angleBody = {..._angleBody, R_ESH}
-            
-          }
-          if(L_S.score > 0.6 && L_E.score>0.6 && L_W.score > 0.6){
-            L_SEW = calculateAgle(L_S, L_E, L_W).sudut
-            _angleBody = {..._angleBody, L_SEW}
-          }
-          if(L_E.score > 0.6 && L_S.score>0.6 && L_H.score > 0.6){
-            L_ESH = calculateAgle(L_E, L_S, L_H).sudut
-            _angleBody = {..._angleBody, L_ESH}
-          }
-
-          //let R_HKA,L_HKA,R_KAF,L_KAF=0;
-
-          if(R_H.score > 0.6 && R_K.score>0.6 && R_A.score > 0.6){
-            R_HKA = calculateAgle(R_H, R_K, R_A).sudut
-            _angleBody = {..._angleBody, R_HKA }
-          }
-          if(L_H.score > 0.6 && L_K.score>0.6 && L_A.score > 0.6){
-            L_HKA = calculateAgle(L_H, L_K, L_A).sudut
-            _angleBody = {..._angleBody, L_HKA}
-          }
-          if(R_K.score > 0.6 && R_A.score>0.6 && R_FI.score > 0.6){
-            R_KAF = calculateAgle(R_K, R_A, R_FI).sudut
-            _angleBody = {..._angleBody, R_KAF}
-          }
-          if(L_K.score > 0.6 && L_A.score>0.6 && L_FI.score > 0.6){
-            L_KAF = calculateAgle(L_K, L_A, L_FI).sudut
-            _angleBody = {..._angleBody, L_KAF}
-          }
-
-          //let R_KHH,L_KHH,R_KHS,L_KHS=0;
-
-          if(R_K.score > 0.6 && R_H.score>0.6 && L_H.score > 0.6){
-            R_KHH = calculateAgle(R_K, R_H, L_H).sudut
-            _angleBody = {..._angleBody, R_KHH}
-          }
-          if(L_K.score > 0.6 && L_H.score>0.6 && R_H.score > 0.6){
-            L_KHH = calculateAgle(R_K, R_H, R_H).sudut
-            _angleBody = {..._angleBody, L_KHH }
-          }
-          if(R_K.score > 0.6 && R_H.score>0.6 && R_S.score > 0.6){
-            R_KHS = calculateAgle(R_K, R_H, R_S).sudut
-            _angleBody = {..._angleBody, R_KHS }
-          }
-          if(L_K.score > 0.6 && L_H.score>0.6 && L_S.score > 0.6){
-            L_KHS = calculateAgle(L_K, L_H, L_S).sudut
-            _angleBody = {..._angleBody, L_KHS}
-          }
-
-          //let R_HSS,L_HSS,R_ESS,L_ESS=0;
-
-          if(R_H.score > 0.6 && R_S.score>0.6 && L_S.score > 0.6){
-            R_HSS = calculateAgle(R_S, R_S, L_S).sudut
-            _angleBody = {..._angleBody, R_HSS}
-          }
-          if(L_H.score > 0.6 && L_S.score>0.6 && R_S.score > 0.6){
-            L_HSS = calculateAgle(L_H, L_S, R_S).sudut
-            _angleBody = {..._angleBody, L_HSS}
-          }
-          if(R_E.score > 0.6 && R_S.score>0.6 && L_S.score > 0.6){
-            R_ESS = calculateAgle(R_E, R_S, L_S).sudut
-            _angleBody = {..._angleBody, R_ESS}
-          }
-          if(L_E.score > 0.6 && L_S.score>0.6 && R_S.score > 0.6){
-            L_ESS = calculateAgle(L_E, L_S, R_S).sudut
-            _angleBody = {..._angleBody, L_ESS }
-          }
-
-          console.log('angleBody', _angleBody)
-
-          setAngleBody(_angleBody)
+        if(R_S.score > Number(scoreEstimated) && R_E.score>0.6 && R_W.score > Number(scoreEstimated)){
+          R_SEW = calculateAgle(R_S, R_E, R_W).sudut            
+          _angleBody = {..._angleBody, R_SEW}
+          console.log('R_SEW', R_SEW)
+        }
+        if(R_E.score > Number(scoreEstimated) && R_S.score>0.6 && R_H.score > Number(scoreEstimated)){
+          R_ESH = calculateAgle(R_E, R_S, R_H).sudut
+          _angleBody = {..._angleBody, R_ESH}
           
+        }
+        if(L_S.score > Number(scoreEstimated) && L_E.score>0.6 && L_W.score > Number(scoreEstimated)){
+          L_SEW = calculateAgle(L_S, L_E, L_W).sudut
+          _angleBody = {..._angleBody, L_SEW}
+        }
+        if(L_E.score > Number(scoreEstimated) && L_S.score>0.6 && L_H.score > Number(scoreEstimated)){
+          L_ESH = calculateAgle(L_E, L_S, L_H).sudut
+          _angleBody = {..._angleBody, L_ESH}
+        }
+
+        //let R_HKA,L_HKA,R_KAF,L_KAF=0;
+
+        if(R_H.score > Number(scoreEstimated) && R_K.score>0.6 && R_A.score > Number(scoreEstimated)){
+          R_HKA = calculateAgle(R_H, R_K, R_A).sudut
+          _angleBody = {..._angleBody, R_HKA }
+        }
+        if(L_H.score > Number(scoreEstimated) && L_K.score>0.6 && L_A.score > Number(scoreEstimated)){
+          L_HKA = calculateAgle(L_H, L_K, L_A).sudut
+          _angleBody = {..._angleBody, L_HKA}
+        }
+        if(R_K.score > Number(scoreEstimated) && R_A.score>0.6 && R_FI.score > Number(scoreEstimated)){
+          R_KAF = calculateAgle(R_K, R_A, R_FI).sudut
+          _angleBody = {..._angleBody, R_KAF}
+        }
+        if(L_K.score > Number(scoreEstimated) && L_A.score>0.6 && L_FI.score > Number(scoreEstimated)){
+          L_KAF = calculateAgle(L_K, L_A, L_FI).sudut
+          _angleBody = {..._angleBody, L_KAF}
+        }
+
+        //let R_KHH,L_KHH,R_KHS,L_KHS=0;
+
+        if(R_K.score > Number(scoreEstimated) && R_H.score>0.6 && L_H.score > Number(scoreEstimated)){
+          R_KHH = calculateAgle(R_K, R_H, L_H).sudut
+          _angleBody = {..._angleBody, R_KHH}
+        }
+        if(L_K.score > Number(scoreEstimated) && L_H.score>0.6 && R_H.score > Number(scoreEstimated)){
+          L_KHH = calculateAgle(R_K, R_H, R_H).sudut
+          _angleBody = {..._angleBody, L_KHH }
+        }
+        if(R_K.score > Number(scoreEstimated) && R_H.score>0.6 && R_S.score > Number(scoreEstimated)){
+          R_KHS = calculateAgle(R_K, R_H, R_S).sudut
+          _angleBody = {..._angleBody, R_KHS }
+        }
+        if(L_K.score > Number(scoreEstimated) && L_H.score>0.6 && L_S.score > Number(scoreEstimated)){
+          L_KHS = calculateAgle(L_K, L_H, L_S).sudut
+          _angleBody = {..._angleBody, L_KHS}
+        }
+
+        //let R_HSS,L_HSS,R_ESS,L_ESS=0;
+
+        if(R_H.score > Number(scoreEstimated) && R_S.score>0.6 && L_S.score > Number(scoreEstimated)){
+          R_HSS = calculateAgle(R_S, R_S, L_S).sudut
+          _angleBody = {..._angleBody, R_HSS}
+        }
+        if(L_H.score > Number(scoreEstimated) && L_S.score>0.6 && R_S.score > Number(scoreEstimated)){
+          L_HSS = calculateAgle(L_H, L_S, R_S).sudut
+          _angleBody = {..._angleBody, L_HSS}
+        }
+        if(R_E.score > Number(scoreEstimated) && R_S.score>0.6 && L_S.score > Number(scoreEstimated)){
+          R_ESS = calculateAgle(R_E, R_S, L_S).sudut
+          _angleBody = {..._angleBody, R_ESS}
+        }
+        if(L_E.score > Number(scoreEstimated) && L_S.score>0.6 && R_S.score > Number(scoreEstimated)){
+          L_ESS = calculateAgle(L_E, L_S, R_S).sudut
+          _angleBody = {..._angleBody, L_ESS }
+        }
+
+        console.log('angleBody', _angleBody)
+
+        setAngleBody(_angleBody)
+        setCopyClipboardReady(true)
 
 
         if(pose.keypoints[11].score >0.6 && pose.keypoints[13].score >0.6 && pose.keypoints[15].score >0.6)
@@ -373,20 +374,20 @@ export default function PictureList(props) {
         }
 
         
-        console.log('orientation cek', dataPoses)
-        if(props.index>0){
-            let pose1 = {
-                keypoint1 : pose.keypoints3D[23],
-                keypoint2 : pose.keypoints3D[24]
-            }
-            let pose2 = {
-                keypoint1 : dataPoses[0]?.pose?.keypoints3D[23],
-                keypoint2 : dataPoses[0]?.pose?.keypoints3D[24]
-            }
-            let orientation  = calculateOrientation(pose2,pose1)
-            console.log('orientation', orientation)
-            setOrientasiPose(orientation.sudut)
-        }
+        // console.log('orientation cek', dataPoses)
+        // if(props.index>0){
+        //     let pose1 = {
+        //         keypoint1 : pose.keypoints3D[23],
+        //         keypoint2 : pose.keypoints3D[24]
+        //     }
+        //     let pose2 = {
+        //         keypoint1 : dataPoses[0]?.pose?.keypoints3D[23],
+        //         keypoint2 : dataPoses[0]?.pose?.keypoints3D[24]
+        //     }
+        //     let orientation  = calculateOrientation(pose2,pose1)
+        //     console.log('orientation', orientation)
+        //     setOrientasiPose(orientation.sudut)
+        // }
         addPose(_angleBody, labelPose)
     }
 
@@ -487,6 +488,8 @@ export default function PictureList(props) {
         changeLabel(props.data.id, e.target.value)
         setAngleBody({...angleBody, label: e.target.value})
     }
+
+    const [scoreEstimated, setScoreEstimated] = useState(0.2)
     
     return (
         <div style={{display:"inline-block", margin:2}}>
@@ -511,6 +514,7 @@ export default function PictureList(props) {
             <p>Kaki ... Kiri : {Math.round(sudutKakiKiri)} ({Math.round(sudutKakiKiri)-180}) &nbsp; - Kanan : {Math.round(sudutKakiKanan)} ({Math.round(sudutKakiKanan)-180})</p>
             <p>Rotasi Badan : {Math.round(orientasiPose)}</p> */}
             {/* <p>{JSON.stringify(angleBody)}</p> */}
+            <p>Masukkan Score Estimasi : <TextField value={scoreEstimated} size="small" onChange={e=>setScoreEstimated(e.target.value)} /></p>
             <Button variant="contained" color="primary" tooltip={JSON.stringify(props.data.pose)} onClick={()=>{
                 detectPose()
             }} >Pose Detect</Button>
@@ -518,7 +522,7 @@ export default function PictureList(props) {
             <br/>
             <br/>
             {
-                angleBody?.L_ESH ? 
+                copyClipboardReady ? 
                 <>
                     <CopyToClipboard text={JSON.stringify(angleBody)}
                         onCopy={() => setCopyCB({copied: true})}>
