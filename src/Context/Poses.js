@@ -5,6 +5,7 @@ export const PoseContext = createContext({});
 export default function ProfileProvider(props) {
   const [dataPoses, setDataPoses] = useState([]);
   const [excelExport, setExcelExport] = useState([]);
+  const [poseModel, setPoseModel] = useState('BlazePose')
   
   const addPose = async(angle, label)=>{
     // setDataPoses([...dataPoses, pose])
@@ -58,6 +59,6 @@ export default function ProfileProvider(props) {
   }
 
 return (
-  <PoseContext.Provider value={{ dataPoses, excelExport, addPose, deletePose, changeLabel }} {...props} />
+  <PoseContext.Provider value={{ dataPoses, excelExport, addPose, deletePose, changeLabel,poseModel, setPoseModel }} {...props} />
 );
 }

@@ -25,7 +25,7 @@ function App() {
   const canvasSnapRef = useRef(null)
   const imgRef = useRef([])
 
-  const { dataPoses, excelExport, addPose, deletePose } = useContext(PoseContext)
+  const { dataPoses, excelExport, addPose, deletePose, poseModel, setPoseModel } = useContext(PoseContext)
   
   const [dataPose, setDataPose] = useState([])
   const [angleSikuKiri, setAngleSikuKiri] = useState(0)
@@ -267,6 +267,14 @@ function App() {
               </video> */}
               <Typography>Pilih Video Source : </Typography>
               <input type="file" onChange={handleFileChange} accept="video/*" />
+              <br/>
+              <Typography>Pilih Model Pose Estimasi : 
+                <Select value={poseModel} onChange={e=>setPoseModel(e.target.value)}>
+                  <MenuItem value="BlazePose">BlazePose</MenuItem>
+                  <MenuItem value="MoveNet">MoveNet</MenuItem>
+                  <MenuItem value="PoseNet">PoseNet</MenuItem>
+                </Select>
+              </Typography>
               {/* <Select value={chooseVideo} onChange={e=>setChooseVideo(e.target.value)}>
                 <MenuItem value="1">Video Kata 1 - Front</MenuItem>
                 <MenuItem value="2">Video Kata 1 - Side</MenuItem>
